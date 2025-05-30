@@ -1,11 +1,10 @@
 package com.example.biblioteka;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
+import javafx.scene.control.PasswordField;
 
+
+import java.awt.*;
 import java.io.IOException;
 
 public class LoginController extends NoweOkno{
@@ -19,4 +18,30 @@ public class LoginController extends NoweOkno{
             System.out.println("Nie mozna otworzyc okna");
         }
     }
+
+   @FXML
+   protected javafx.scene.control.TextField EmailLogin;
+
+    @FXML
+    protected PasswordField HasloLogin;
+
+
+
+
+    @FXML
+    protected void OnZalogujSie(){
+        if (EmailLogin.getText().isEmpty() || HasloLogin.getText().isEmpty()) {
+            System.out.println("Pola login i hasło nie mogą być puste!");
+        }
+        else {
+            LoginSprawdzanie.LoginSpr(EmailLogin.getText(), HasloLogin.getText());
+        }
+
+
+
+
+    }
+
+
+
 }

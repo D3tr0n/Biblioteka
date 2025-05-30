@@ -21,14 +21,14 @@ public class BazaDanychConn {
                 String email = "jan.kowalski2@example.com";
                 String haslo = "TymczasoweHaslo2";
 
-                String sql = "INSERT INTO czytelnik (imie, nazwisko, email) VALUES (?, ?, ?,?)";
+                String sql = "INSERT INTO czytelnik (imie, nazwisko, email, haslo) VALUES (?, ?, ?,?)";
 
                 PreparedStatement pstmt = conn.prepareStatement(sql);
 
                 pstmt.setString(1, imie);
                 pstmt.setString(2, nazwisko);
                 pstmt.setString(3, email);
-                pstmt.setString(3, haslo);
+                pstmt.setString(4, haslo);
 
                 int rowsInserted = pstmt.executeUpdate();
 

@@ -29,12 +29,13 @@
       <TextField fx:id="Imie" layoutX="226.0" layoutY="106.0" />
       <TextField fx:id="Nazwisko" layoutX="226.0" layoutY="166.0" />
       <TextField fx:id="Email" layoutX="226.0" layoutY="226.0" />
-      <Button layoutX="254.0" layoutY="327.0" mnemonicParsing="false" onAction="#onRejestruj" text="Zarejestruj się" />
+      <Button layoutX="254.0" layoutY="347.0" mnemonicParsing="false" onAction="#onRejestruj" text="Zarejestruj się" />
       <Text layoutX="278.0" layoutY="277.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hasło">
          <font>
             <Font size="17.0" />
          </font>
       </Text>
       <PasswordField fx:id="Haslo" layoutX="226.0" layoutY="281.0" />
+      <Label fx:id="BladDanych" alignment="CENTER" contentDisplay="CENTER" layoutX="227.0" layoutY="316.0" prefHeight="17.0" prefWidth="149.0" textAlignment="CENTER" textFill="RED" />
    </children>
 </AnchorPane>

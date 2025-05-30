@@ -24,8 +24,17 @@ public class RejestracjaController extends PobieranieRejestracja{
     private PasswordField Haslo;
 
     @FXML
+    private Label BladDanych;
+
+    @FXML
     protected void onRejestruj() {
-       Rejestracja(Imie.getText(), Nazwisko.getText(),Haslo.getText(), Email.getText());
+        if(Email.getText().isEmpty() || Haslo.getText().isEmpty() || Imie.getText().isEmpty() || Nazwisko.getText().isEmpty() || !Email.getText().contains("@")){
+            BladDanych.setText("Błędne dane...");
+        }else {
+            BladDanych.setText("");
+            Rejestracja(Imie.getText(), Nazwisko.getText(), Haslo.getText(), Email.getText());
+
+        }
 
     }
 }
