@@ -4,13 +4,22 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.Node;
+import javafx.stage.Stage;
 
-public class LoginSprawdzanie extends NoweOkno{
-    public static void LoginSpr(String email, String haslo){
+
+public class LoginSprawdzanie{
+
+    @FXML
+    protected Label BladLogowania;
+
+
+    public void LoginSpr(String email, String haslo){
 
 
         Connection conn;
-
         try {
             Class.forName("org.postgresql.Driver");
             conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/Biblioteka2.0", "postgres", "kacper13");
@@ -31,9 +40,16 @@ public class LoginSprawdzanie extends NoweOkno{
                 if (resultSet.next()) {
                     System.out.println("Logowanie udane!");
 
+                    NoweOkno okno = new NoweOkno();
+                    okno.otworzOkno("Rejestracja.fxml", "Menu");
+                    BladLogowania.getScene().getWindow().hide();
+
+
 
                 } else {
                     System.out.println("Błąd logowania! Niepoprawny email lub hasło.");
+                    BladLogowania.setText("Błąd");
+
                 }
 
 
