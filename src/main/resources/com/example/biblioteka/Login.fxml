@@ -4,8 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="516.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="516.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.biblioteka.LoginController">
    <children>
       <Text layoutX="205.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login">
          <font>
@@ -24,7 +23,7 @@
       </Text>
       <PasswordField layoutX="183.0" layoutY="210.0" />
       <TextField layoutX="183.0" layoutY="143.0" />
-      <Button layoutX="257.0" layoutY="266.0" mnemonicParsing="false" text="Zaloguj się" />
-      <Button layoutX="390.0" layoutY="344.0" mnemonicParsing="false" text="Zarejestruj się" />
+      <Button layoutX="221.0" layoutY="265.0" mnemonicParsing="false" text="Zaloguj się" />
+      <Button layoutX="390.0" layoutY="344.0" mnemonicParsing="false" onAction="#onHelloButtonClick" text="Zarejestruj się" />
    </children>
 </Pane>

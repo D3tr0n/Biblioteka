@@ -1,9 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #FA8072;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <AnchorPane layoutX="-3.0" layoutY="73.0" prefHeight="329.0" prefWidth="607.0" style="-fx-background-color: #FFFFFF;" />
-   </children>
-</AnchorPane>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.biblioteka.MenuController">
+            
+    <left>
+        <VBox spacing="10" style="-fx-padding: 10; -fx-background-color: #f0f0f0;">
+            <Button text="Czytelnik" 
+                    prefWidth="120" 
+                    onAction="#pokazCzytelnika"/>
+            <Button text="Książki" 
+                    prefWidth="120" 
+                    onAction="#pokazKsiazki"/>
+        </VBox>
+    </left>
+    
+    <center>
+        <StackPane>
+            <!-- Panel Czytelników -->
+            <VBox fx:id="panelCzytelnikow" spacing="10" visible="true">
+                <padding>
+                    <Insets top="10" right="10" bottom="10" left="10"/>
+                </padding>
+                
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <TextField fx:id="wyszukiwarkaCzytelnikow" promptText="Szukaj czytelnika..." prefWidth="300"/>
+                    <Button text="🔍" onAction="#wyszukajCzytelnika"/>
+                </HBox>
+                
+                <TableView fx:id="tabelaCzytelnikow" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="kolumnaIdCzytelnika" text="ID" prefWidth="50"/>
+                        <TableColumn fx:id="kolumnaImie" text="Imię" prefWidth="150"/>
+                        <TableColumn fx:id="kolumnaNazwisko" text="Nazwisko" prefWidth="150"/>
+                        <TableColumn fx:id="kolumnaPesel" text="PESEL" prefWidth="120"/>
+                        <TableColumn fx:id="kolumnaTelefon" text="Telefon" prefWidth="120"/>
+                        <TableColumn fx:id="kolumnaEmail" text="Email" prefWidth="200"/>
+                    </columns>
+                </TableView>
+            </VBox>
+
+            <!-- Panel Książek -->
+            <VBox fx:id="panelKsiazek" spacing="10" visible="false">
+                <padding>
+                    <Insets top="10" right="10" bottom="10" left="10"/>
+                </padding>
+                
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <TextField fx:id="wyszukiwarkaKsiazek" promptText="Szukaj książki..." prefWidth="300"/>
+                    <Button text="🔍" onAction="#wyszukajKsiazke"/>
+                </HBox>
+                
+                <TableView fx:id="tabelaKsiazek" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="kolumnaIdKsiazki" text="ID" prefWidth="50"/>
+                        <TableColumn fx:id="kolumnaTytul" text="Tytuł" prefWidth="200"/>
+                        <TableColumn fx:id="kolumnaAutor" text="Autor" prefWidth="150"/>
+                        <TableColumn fx:id="kolumnaRok" text="Rok wydania" prefWidth="100"/>
+                        <TableColumn fx:id="kolumnaISBN" text="ISBN" prefWidth="120"/>
+                        <TableColumn fx:id="kolumnaStatus" text="Status" prefWidth="100"/>
+                    </columns>
+                </TableView>
+            </VBox>
+        </StackPane>
+    </center>
+    
+</BorderPane>

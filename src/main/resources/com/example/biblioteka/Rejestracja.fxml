@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.biblioteka.RejestracjaController">
+   <children>
+      <Text layoutX="169.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Zarejestruj się">
+         <font>
+            <Font size="43.0" />
+         </font>
+      </Text>
+      <Text layoutX="283.0" layoutY="102.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Imię:">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Text>
+      <Text layoutX="263.0" layoutY="159.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nazwisko:">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Text>
+      <Text layoutX="275.0" layoutY="219.0" strokeType="OUTSIDE" strokeWidth="0.0" text="E-mail:">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Text>
+      <TextField fx:id="Imie" layoutX="226.0" layoutY="106.0" />
+      <TextField fx:id="Nazwisko" layoutX="226.0" layoutY="166.0" />
+      <TextField fx:id="Email" layoutX="226.0" layoutY="226.0" />
+      <Button layoutX="254.0" layoutY="327.0" mnemonicParsing="false" onAction="#onRejestruj" text="Zarejestruj się" />
+      <Text layoutX="278.0" layoutY="277.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hasło">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Text>
+      <PasswordField fx:id="Haslo" layoutX="226.0" layoutY="281.0" />
+   </children>
+</AnchorPane>
