@@ -16,7 +16,7 @@ public class ZczytanieKsiazek {
                     "kacper13"
             );
 
-            String zapytanie = "SELECT k.tytul, k.status, k.gatunek, a.imie_autora, a.nazwisko_autora " +
+            String zapytanie = "SELECT k.kod_ksiazki, k.tytul, k.status, k.gatunek, a.imie_autora, a.nazwisko_autora " +
                     "FROM ksiazka k " +
                     "JOIN autorzy a ON k.id_autora = a.id_autora";
 
@@ -46,6 +46,7 @@ public class ZczytanieKsiazek {
 
             while (rs.next()) {
                 listaKsiazek.add(new Ksiazka(
+                        rs.getInt("kod_ksiazki"),
                         rs.getString("tytul"),
                         rs.getString("status"),
                         rs.getString("gatunek"),

@@ -24,6 +24,7 @@
                 <HBox alignment="CENTER_LEFT" spacing="10">
                     <TextField fx:id="szukanyCiag" prefWidth="300" promptText="Szukaj czytelnika..." />
                     <Button onAction="#wyszukajCzytelnika" text="🔍" />
+               <Button mnemonicParsing="false" onAction="#onUsunCzytelnika" text="Usuń Czytelnika" />
                 </HBox>
                 
                 <TableView fx:id="tabelaCzytelnikow" VBox.vgrow="ALWAYS">
@@ -44,6 +45,7 @@
                 <HBox alignment="CENTER_LEFT" spacing="10">
                     <TextField fx:id="wyszukiwarkaKsiazek" prefWidth="300" promptText="Szukaj książki..." />
                     <Button onAction="#wyszukajKsiazki" text="🔍" />
+                <Button mnemonicParsing="false" onAction="#onUsunKsiazke" text="Usuń Książkę" />
                 </HBox>
                 
                 <TableView fx:id="tabelaKsiazek" VBox.vgrow="ALWAYS">
