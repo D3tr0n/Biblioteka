@@ -8,8 +8,8 @@
             
     <left>
         <VBox spacing="10" style="-fx-padding: 10; -fx-background-color: #f0f0f0;">
-            <Button prefWidth="120" text="Czytelnik" />
-            <Button prefWidth="120" text="Książki" />
+            <Button onAction="#pokazCzytelnikow" prefWidth="120" text="Czytelnik" />
+            <Button onAction="#pokazKsiazki" prefWidth="120" text="Książki" />
         </VBox>
     </left>
     
@@ -22,7 +22,7 @@
                 </padding>
                 
                 <HBox alignment="CENTER_LEFT" spacing="10">
-                    <TextField prefWidth="300" promptText="Szukaj czytelnika..." />
+                    <TextField fx:id="szukanyCiag" prefWidth="300" promptText="Szukaj czytelnika..." />
                     <Button onAction="#wyszukajCzytelnika" text="🔍" />
                 </HBox>
                 
@@ -43,16 +43,15 @@
                 
                 <HBox alignment="CENTER_LEFT" spacing="10">
                     <TextField fx:id="wyszukiwarkaKsiazek" prefWidth="300" promptText="Szukaj książki..." />
-                    <Button text="🔍" />
+                    <Button onAction="#wyszukajKsiazki" text="🔍" />
                 </HBox>
                 
                 <TableView fx:id="tabelaKsiazek" VBox.vgrow="ALWAYS">
                     <columns>
-                        <TableColumn fx:id="kolumnaIdKsiazki" prefWidth="50" text="ID" />
                         <TableColumn fx:id="kolumnaTytul" prefWidth="200" text="Tytuł" />
-                        <TableColumn fx:id="kolumnaAutor" prefWidth="150" text="Autor" />
-                        <TableColumn fx:id="kolumnaRok" prefWidth="100" text="Rok wydania" />
-                        <TableColumn fx:id="kolumnaISBN" prefWidth="120" text="ISBN" />
+                        <TableColumn fx:id="kolumnaImieAutora" prefWidth="150" text="Imie Autora" />
+                  <TableColumn fx:id="kolumnaNazwaAutora" prefWidth="150" text="Nazwisko Autora" />
+                        <TableColumn fx:id="kolumnaGatunek" prefWidth="120" text="Gatunek" />
                         <TableColumn fx:id="kolumnaStatus" prefWidth="100" text="Status" />
                     </columns>
                 </TableView>
