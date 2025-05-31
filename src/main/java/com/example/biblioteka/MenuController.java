@@ -10,7 +10,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.VBox;
 
-
+import java.io.IOException;
+import java.sql.SQLException;
 
 
 public class MenuController extends ZczytanieCzytelnikow {
@@ -40,12 +41,14 @@ public class MenuController extends ZczytanieCzytelnikow {
     @FXML
     private void pokazCzytelnikow() {
         panelCzytelnikow.setVisible(true);
+        panelWyporzyczen.setVisible(false);
         panelKsiazek.setVisible(false);
     }
 
     @FXML
     private void pokazKsiazki() {
         panelCzytelnikow.setVisible(false);
+        panelWyporzyczen.setVisible(false);
         panelKsiazek.setVisible(true);
     }
 
@@ -131,12 +134,126 @@ public class MenuController extends ZczytanieCzytelnikow {
         kolumnaImieAutora.setCellFactory(TextFieldTableCell.forTableColumn());
         kolumnaNazwaAutora.setCellFactory(TextFieldTableCell.forTableColumn());
         kolumnaGatunek.setCellFactory(TextFieldTableCell.forTableColumn());
+        
 
 
 
         EdycjaDanych edycja = new EdycjaDanych();
         edycja.ustawEdycjeKsiazek(kolumnaTytul, kolumnaStatus, kolumnaImieAutora, kolumnaNazwaAutora, kolumnaGatunek);
     }
+
+
+
+    @FXML
+    public void onDodajKsiazke() {
+        try {
+            NoweOkno okno = new NoweOkno();
+            okno.otworzOkno("MenuDodajKsiazke.fxml", "Dodaj książkę!!!");
+
+
+        } catch (IOException e) {
+            System.out.println("Nie mozna otworzyc okna");
+        }
+
+    }
+
+
+    @FXML private VBox panelWyporzyczen;
+
+    @FXML
+    private TextField wyszukiwarkaWyporzyczen;
+
+    @FXML
+    private TableView<Wyporzyczenie> tabelaWyporzyczen;
+
+    @FXML
+    private TableColumn<Wyporzyczenie, String> kolumnaCzytelnikImie;
+
+    @FXML
+    private TableColumn<Wyporzyczenie, String> kolumnaCzytelnikNazwisko;
+
+    @FXML
+    private TableColumn<Wyporzyczenie, String> kolumnaTytulKsiazki;
+
+    @FXML
+    private TableColumn<Wyporzyczenie, String> kolumnaDataWyporzyczenia;
+
+    @FXML
+    private TableColumn<Wyporzyczenie, String> kolumnaDataOddania;
+
+    @FXML
+    private TableColumn<Wyporzyczenie, String> kolumnaStatus2;
+
+    private final ObservableList<Wyporzyczenie> listaWyporzyczen = FXCollections.observableArrayList();
+
+
+    @FXML
+    private void pokazWyporzyczenia() {
+        panelWyporzyczen.setVisible(true);
+        panelKsiazek.setVisible(false);
+        panelCzytelnikow.setVisible(false);
+
+        zaladujWyporzyczenia();
+    }
+
+    private void zaladujWyporzyczenia() {
+            WyporzyczeniaDane wczytaneDaneWyporzyczenia = new WyporzyczeniaDane();
+            wczytaneDaneWyporzyczenia.wczytajDaneZWyporzyczen(listaWyporzyczen, tabelaWyporzyczen,wyszukiwarkaWyporzyczen.getText() );
+    }
+
+    @FXML
+    private void WyszukajWyporzyczenia() {
+
+    kolumnaCzytelnikImie.setCellValueFactory(new PropertyValueFactory<>("imie"));
+    kolumnaCzytelnikNazwisko.setCellValueFactory(new PropertyValueFactory<>("nazwisko"));
+    kolumnaTytulKsiazki.setCellValueFactory(new PropertyValueFactory<>("tytul"));
+    kolumnaDataWyporzyczenia.setCellValueFactory(new PropertyValueFactory<>("dataWypozyczenia"));
+    kolumnaDataOddania.setCellValueFactory(new PropertyValueFactory<>("dataOddania"));
+    kolumnaStatus2.setCellValueFactory(new PropertyValueFactory<>("status"));
+
+
+    WyporzyczeniaDane wczytaneDaneWyporzyczenia = new WyporzyczeniaDane();
+    wczytaneDaneWyporzyczenia.wczytajDaneZWyporzyczen(listaWyporzyczen, tabelaWyporzyczen, wyszukiwarkaWyporzyczen.getText());
+
+
+    tabelaWyporzyczen.refresh();
+}
+
+@FXML
+private void zmienStatusWyporzyczenia() {
+
+    Wyporzyczenie wybraneWypozyczenie = tabelaWyporzyczen.getSelectionModel().getSelectedItem();
+    
+    if (wybraneWypozyczenie == null) {
+        System.out.println("Nie wybrano żadnego wypożyczenia.");
+        return;
+    }
+    int idKsiazki = wybraneWypozyczenie.getkodKsiazki();
+
+    String obecnyStatus = wybraneWypozyczenie.getStatus();
+    String nowyStatus = obecnyStatus.equals("Wypożyczona") ? "Dostępna" : "Wypożyczona";
+
+    wybraneWypozyczenie.setStatus(nowyStatus);
+
+    tabelaWyporzyczen.refresh();
+
+    zmienStatus zmienStatus = new zmienStatus();
+    try {
+        zmienStatus.zmienStatusKsiazkiIOddaWypozyczenie(idKsiazki, nowyStatus);
+        System.out.println("Status wypożyczenia został zaktualizowany w bazie.");
+    } catch (SQLException e) {
+        e.printStackTrace();
+        System.out.println("Błąd podczas aktualizacji statusu w bazie danych.");
+    }
+}
+
+
+    @FXML
+    private void onWyporzyczKsiazke() {
+
+    }
+
+
 
 
 

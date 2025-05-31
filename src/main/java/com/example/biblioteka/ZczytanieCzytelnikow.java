@@ -22,24 +22,24 @@ public class ZczytanieCzytelnikow {
             szukanyCiag = szukanyCiag == null ? "" : szukanyCiag.trim();
 
             if (!szukanyCiag.isEmpty()) {
-                String[] slowa = szukanyCiag.split("\\s+", 2); // podziel na maks 2 słowa
+                String[] slowa = szukanyCiag.split("\\s+", 2);
 
                 if (slowa.length == 2) {
-                    // Imię i nazwisko podane
+
                     zapytanie += " WHERE LOWER(imie) LIKE LOWER(?) AND LOWER(nazwisko) LIKE LOWER(?)";
                     stmt = conn.prepareStatement(zapytanie);
                     stmt.setString(1, "%" + slowa[0] + "%");
                     stmt.setString(2, "%" + slowa[1] + "%");
 
                 } else {
-                    // Tylko jedno słowo – szukaj jako imię LUB nazwisko
+
                     zapytanie += " WHERE LOWER(imie) LIKE LOWER(?) OR LOWER(nazwisko) LIKE LOWER(?)";
                     stmt = conn.prepareStatement(zapytanie);
                     stmt.setString(1, "%" + slowa[0] + "%");
                     stmt.setString(2, "%" + slowa[0] + "%");
                 }
             } else {
-                // Brak filtru – pokaż wszystko
+
                 stmt = conn.prepareStatement(zapytanie);
             }
 
