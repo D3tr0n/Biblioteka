@@ -51,4 +51,30 @@ public void wypozyczKsiazke(String email, Ksiazka ksiazka) throws SQLException {
         }
     }
 }
+public void usunWypozyczeniaDlaStatusDostepna() throws SQLException {
+    try (Connection conn = getConnection()) {
+        conn.setAutoCommit(false);
+
+        try {
+            String deleteQuery = """
+                DELETE FROM wypozyczenia
+                WHERE kod_ksiazki IN (
+                    SELECT kod_ksiazki
+                    FROM ksiazka
+                    WHERE status = 'Dostępna'
+                )
+            """;
+
+            try (PreparedStatement stmt = conn.prepareStatement(deleteQuery)) {
+                int rowsDeleted = stmt.executeUpdate();
+                System.out.println("Liczba usuniętych wpisów wypożyczeń: " + rowsDeleted);
+            }
+
+            conn.commit();
+        } catch (SQLException e) {
+            conn.rollback();
+            throw new SQLException("Błąd podczas usuwania wypożyczeń: " + e.getMessage(), e);
+        }
+    }
+}
 }

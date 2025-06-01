@@ -11,12 +11,10 @@ public class Wyporzyczenie {
     private LocalDate dataWypozyczenia;
     private LocalDate dataOddania;
     private String status;
+    private String email;
 
-
-    public Wyporzyczenie(int idCzytelnika, int kodKsiazki, String imie,
-                         String nazwisko, String tytul, LocalDate dataWypozyczenia,
-                         LocalDate dataOddania, String status) {
-
+    public Wyporzyczenie(int idCzytelnika, int kodKsiazki, String imie, String nazwisko, String tytul,
+                         LocalDate dataWypozyczenia, LocalDate dataOddania, String status, String email) {
         this.idCzytelnika = idCzytelnika;
         this.kodKsiazki = kodKsiazki;
         this.imie = imie;
@@ -25,46 +23,43 @@ public class Wyporzyczenie {
         this.dataWypozyczenia = dataWypozyczenia;
         this.dataOddania = dataOddania;
         this.status = status;
+        this.email = email;
     }
 
 
-    public String getImie() {
-        return imie;
+    public int getIdCzytelnika() {
+        return idCzytelnika;
     }
 
-    public int getkodKsiazki() {
+    public int getKodKsiazki() {
         return kodKsiazki;
-    }
-
-
-
-
-    public void setImie(String imie) {
-        this.imie = imie;
-    }
-
-    public String getNazwisko() {
-        return nazwisko;
-    }
-
-    public void setNazwisko(String nazwisko) {
-        this.nazwisko = nazwisko;
-    }
-
-    public String getTytul() {
-        return tytul;
-    }
-
-    public void setTytul(String tytul) {
-        this.tytul = tytul;
     }
 
     public LocalDate getDataWypozyczenia() {
         return dataWypozyczenia;
     }
 
-    public void setDataWypozyczenia(LocalDate dataWypozyczenia) {
-        this.dataWypozyczenia = dataWypozyczenia;
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    public String getEmail() {
+        return email;
+    }
+
+    public String getImie() {
+        return imie;
+    }
+
+    public String getNazwisko() {
+        return nazwisko;
+    }
+
+    public String getTytul() {
+        return tytul;
     }
 
     public LocalDate getDataOddania() {
@@ -75,11 +70,5 @@ public class Wyporzyczenie {
         this.dataOddania = dataOddania;
     }
 
-    public String getStatus() {
-        return status;
-    }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
 }

@@ -3,6 +3,7 @@ package com.example.biblioteka;
 import javafx.beans.property.SimpleStringProperty;
 
 public class Czytelnik {
+    private int idCzytelnika;
     private final SimpleStringProperty imie;
     private final SimpleStringProperty nazwisko;
     private final SimpleStringProperty email;
@@ -26,6 +27,10 @@ public class Czytelnik {
     }
 
     public int getIdCzytelnika() {
-        return Integer.parseInt(getEmail().substring(0, getEmail().indexOf("@")));
+        return idCzytelnika;
+    }
+
+    public void setIdCzytelnika(int idCzytelnika) {
+        this.idCzytelnika = idCzytelnika;
     }
 }

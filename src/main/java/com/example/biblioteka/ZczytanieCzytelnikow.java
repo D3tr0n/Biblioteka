@@ -7,7 +7,7 @@ import java.sql.*;
 
 public class ZczytanieCzytelnikow {
 
-    public void wczytajDaneZCzytelnicy(ObservableList listaCzytelnikow, TableView tabelaCzytelnikow, String szukanyCiag) {
+    public void wczytajDaneZCzytelnicy(ObservableList<Czytelnik> listaCzytelnikow, TableView<Czytelnik> tabelaCzytelnikow, String szukanyCiag) {
         try {
             Class.forName("org.postgresql.Driver");
             Connection conn = DriverManager.getConnection(
@@ -16,7 +16,8 @@ public class ZczytanieCzytelnikow {
                     "kacper13"
             );
 
-            String zapytanie = "SELECT imie, nazwisko, email FROM czytelnik";
+
+            String zapytanie = "SELECT id_czytelnika, imie, nazwisko, email FROM czytelnik";
             PreparedStatement stmt;
 
             szukanyCiag = szukanyCiag == null ? "" : szukanyCiag.trim();
@@ -29,7 +30,7 @@ public class ZczytanieCzytelnikow {
                     zapytanie += " WHERE LOWER(imie) LIKE LOWER(?) AND LOWER(nazwisko) LIKE LOWER(?)";
                     stmt = conn.prepareStatement(zapytanie);
                     stmt.setString(1, "%" + slowa[0] + "%");
-                    stmt.setString(2, "%" + slowa[1] + "%");
+                    stmt.setString(2, "%" + slowa[0] + "%");
 
                 } else {
 
@@ -39,19 +40,22 @@ public class ZczytanieCzytelnikow {
                     stmt.setString(2, "%" + slowa[0] + "%");
                 }
             } else {
-
                 stmt = conn.prepareStatement(zapytanie);
             }
 
             ResultSet rs = stmt.executeQuery();
             listaCzytelnikow.clear();
 
+
             while (rs.next()) {
-                listaCzytelnikow.add(new Czytelnik(
+                Czytelnik czytelnik = new Czytelnik(
                         rs.getString("imie"),
                         rs.getString("nazwisko"),
                         rs.getString("email")
-                ));
+                );
+                czytelnik.setIdCzytelnika(rs.getInt("id_czytelnika"));
+
+                listaCzytelnikow.add(czytelnik);
             }
 
             tabelaCzytelnikow.setItems(listaCzytelnikow);

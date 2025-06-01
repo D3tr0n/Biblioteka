@@ -40,7 +40,7 @@ public class LoginSprawdzanie{
                     if ( resultSet.getString("email").equals("admin@") && resultSet.getString("haslo").equals("admin123")){
                         System.out.println("Logowanie udane!");
                         FXMLLoader fxmlLoader2 = new FXMLLoader(Login.class.getResource("Menu.fxml"));
-                        Scene scene2 = new Scene(fxmlLoader2.load(), 1000, 400);
+                        Scene scene2 = new Scene(fxmlLoader2.load(), 1200, 400);
                         Stage stage = new Stage();
                         stage.setTitle("Menu");
                         stage.setScene(scene2);

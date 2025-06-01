@@ -49,13 +49,30 @@ public class UsuwanieDanych {
         try (Connection conn = DriverManager.getConnection(
                 "jdbc:postgresql://localhost:5432/Biblioteka2.0", "postgres", "kacper13")) {
 
-            String sql = "DELETE FROM czytelnik WHERE email = ?";
+            conn.setAutoCommit(false);
 
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, czytelnik.getEmail());
+            try {
+                String sqlUsunWypozyczenia = "DELETE FROM wypozyczenia WHERE id_czytelnika = ?";
+                PreparedStatement stmtUsunWypozyczenia = conn.prepareStatement(sqlUsunWypozyczenia);
+                stmtUsunWypozyczenia.setInt(1, czytelnik.getIdCzytelnika());
+                int wypozyczeniaUsuniete = stmtUsunWypozyczenia.executeUpdate();
+                System.out.println("Usunięto powiązane wypożyczenia: " + wypozyczeniaUsuniete);
 
-            int rowsDeleted = stmt.executeUpdate();
-            return rowsDeleted > 0;
+                String sqlUsunCzytelnika = "DELETE FROM czytelnik WHERE id_czytelnika = ?";
+                PreparedStatement stmtUsunCzytelnika = conn.prepareStatement(sqlUsunCzytelnika);
+                stmtUsunCzytelnika.setInt(1, czytelnik.getIdCzytelnika());
+                int czytelnikUsuniety = stmtUsunCzytelnika.executeUpdate();
+
+                conn.commit();
+
+                return czytelnikUsuniety > 0;
+            } catch (SQLException e) {
+                conn.rollback();
+                e.printStackTrace();
+                return false;
+            } finally {
+                conn.setAutoCommit(true);
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();

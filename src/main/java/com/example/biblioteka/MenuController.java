@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 
 public class MenuController extends ZczytanieCzytelnikow {
@@ -123,37 +124,51 @@ public class MenuController extends ZczytanieCzytelnikow {
     private void onUsunCzytelnika() {
         UsuwanieDanych usuwanieDanych = new UsuwanieDanych();
         Czytelnik wybranyCzytelnik = tabelaCzytelnikow.getSelectionModel().getSelectedItem();
+
         if (wybranyCzytelnik != null) {
-            if (usuwanieDanych.usunCzytelnikaZBazy(wybranyCzytelnik)) {
-                tabelaCzytelnikow.getItems().remove(wybranyCzytelnik);
-            }
+        if (usuwanieDanych.usunCzytelnikaZBazy(wybranyCzytelnik)) {
+            tabelaCzytelnikow.getItems().remove(wybranyCzytelnik);
+            System.out.println("Czytelnik został usunięty.");
+        } else {
+            System.out.println("Nie udało się usunąć czytelnika.");
         }
+    } else {
+        System.out.println("Nie wybrano żadnego czytelnika.");
     }
+}
 
-    @FXML
-    public void initialize() {
-        tabelaKsiazek.setEditable(true);
-
-        kolumnaTytul.setCellFactory(TextFieldTableCell.forTableColumn());
-        kolumnaStatus.setCellFactory(TextFieldTableCell.forTableColumn());
-        kolumnaImieAutora.setCellFactory(TextFieldTableCell.forTableColumn());
-        kolumnaNazwaAutora.setCellFactory(TextFieldTableCell.forTableColumn());
-        kolumnaGatunek.setCellFactory(TextFieldTableCell.forTableColumn());
-
-        kolumnaTytul.setCellValueFactory(new PropertyValueFactory<>("tytul"));
-        kolumnaImieAutora.setCellValueFactory(new PropertyValueFactory<>("imieAutora"));
-        kolumnaNazwaAutora.setCellValueFactory(new PropertyValueFactory<>("nazwiskoAutora"));
-        kolumnaGatunek.setCellValueFactory(new PropertyValueFactory<>("Gatunek"));
-        kolumnaStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
-
-
-        ZczytanieKsiazek zczytanieKsiazek = new ZczytanieKsiazek();
-        zczytanieKsiazek.wczytajDaneZKsiazki(listaKsiazek, tabelaKsiazek, "");
-
-
-        EdycjaDanych edycja = new EdycjaDanych();
-        edycja.ustawEdycjeKsiazek(kolumnaTytul, kolumnaStatus, kolumnaImieAutora, kolumnaNazwaAutora, kolumnaGatunek);
+@FXML
+public void initialize() {
+    try {
+        WyporzyczeniaDodanie wyporzyczeniaDodanie = new WyporzyczeniaDodanie();
+        wyporzyczeniaDodanie.usunWypozyczeniaDlaStatusDostepna();
+        System.out.println("Automatyczne usuwanie zakończonych wypożyczeń zakończone sukcesem.");
+    } catch (SQLException e) {
+        e.printStackTrace();
+        System.out.println("Nie udało się automatycznie usunąć zakończonych wypożyczeń: " + e.getMessage());
     }
+    zaladujWyporzyczenia();
+
+    tabelaKsiazek.setEditable(true);
+
+    kolumnaTytul.setCellFactory(TextFieldTableCell.forTableColumn());
+    kolumnaStatus.setCellFactory(TextFieldTableCell.forTableColumn());
+    kolumnaImieAutora.setCellFactory(TextFieldTableCell.forTableColumn());
+    kolumnaNazwaAutora.setCellFactory(TextFieldTableCell.forTableColumn());
+    kolumnaGatunek.setCellFactory(TextFieldTableCell.forTableColumn());
+
+    kolumnaTytul.setCellValueFactory(new PropertyValueFactory<>("tytul"));
+    kolumnaImieAutora.setCellValueFactory(new PropertyValueFactory<>("imieAutora"));
+    kolumnaNazwaAutora.setCellValueFactory(new PropertyValueFactory<>("nazwiskoAutora"));
+    kolumnaGatunek.setCellValueFactory(new PropertyValueFactory<>("Gatunek"));
+    kolumnaStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+
+    ZczytanieKsiazek zczytanieKsiazek = new ZczytanieKsiazek();
+    zczytanieKsiazek.wczytajDaneZKsiazki(listaKsiazek, tabelaKsiazek, "");
+
+    EdycjaDanych edycja = new EdycjaDanych();
+    edycja.ustawEdycjeKsiazek(kolumnaTytul, kolumnaStatus, kolumnaImieAutora, kolumnaNazwaAutora, kolumnaGatunek);
+}
 
 
 
@@ -199,6 +214,9 @@ public class MenuController extends ZczytanieCzytelnikow {
     @FXML
     private TableColumn<Wyporzyczenie, String> kolumnaStatus2;
 
+    @FXML
+    private TableColumn<Wyporzyczenie, String> kolumnaEamilWypo;
+
     private final ObservableList<Wyporzyczenie> listaWyporzyczen = FXCollections.observableArrayList();
 
 
@@ -212,8 +230,11 @@ public class MenuController extends ZczytanieCzytelnikow {
     }
 
     private void zaladujWyporzyczenia() {
-            WyporzyczeniaDane wczytaneDaneWyporzyczenia = new WyporzyczeniaDane();
-            wczytaneDaneWyporzyczenia.wczytajDaneZWyporzyczen(listaWyporzyczen, tabelaWyporzyczen,wyszukiwarkaWyporzyczen.getText() );
+        WyporzyczeniaDane wczytaneDaneWyporzyczenia = new WyporzyczeniaDane();
+        listaWyporzyczen.clear();
+        wczytaneDaneWyporzyczenia.wczytajDaneZWyporzyczen(listaWyporzyczen, tabelaWyporzyczen,wyszukiwarkaWyporzyczen.getText() );
+        tabelaWyporzyczen.refresh();
+
     }
 
     @FXML
@@ -224,36 +245,42 @@ public class MenuController extends ZczytanieCzytelnikow {
     kolumnaDataWyporzyczenia.setCellValueFactory(new PropertyValueFactory<>("dataWypozyczenia"));
     kolumnaDataOddania.setCellValueFactory(new PropertyValueFactory<>("dataOddania"));
     kolumnaStatus2.setCellValueFactory(new PropertyValueFactory<>("status"));
+    kolumnaEamilWypo.setCellValueFactory(new PropertyValueFactory<>("email"));
 
     WyporzyczeniaDane wczytaneDaneWyporzyczenia = new WyporzyczeniaDane();
     wczytaneDaneWyporzyczenia.wczytajDaneZWyporzyczen(listaWyporzyczen, tabelaWyporzyczen, wyszukiwarkaWyporzyczen.getText());
+
+    zaladujWyporzyczenia();
+    tabelaWyporzyczen.refresh();
 }
 
 @FXML
 private void zmienStatusWyporzyczenia() {
-
     Wyporzyczenie wybraneWypozyczenie = tabelaWyporzyczen.getSelectionModel().getSelectedItem();
-    
+
     if (wybraneWypozyczenie == null) {
         System.out.println("Nie wybrano żadnego wypożyczenia.");
         return;
     }
-    int idKsiazki = wybraneWypozyczenie.getkodKsiazki();
+
+    int idCzytelnika = wybraneWypozyczenie.getIdCzytelnika();
+    int kodKsiazki = wybraneWypozyczenie.getKodKsiazki();
+    LocalDate dataWypozyczenia = wybraneWypozyczenie.getDataWypozyczenia();
 
     String obecnyStatus = wybraneWypozyczenie.getStatus();
     String nowyStatus = obecnyStatus.equals("Wypożyczona") ? "Dostępna" : "Wypożyczona";
 
-    wybraneWypozyczenie.setStatus(nowyStatus);
-
-    tabelaWyporzyczen.refresh();
-
-    zmienStatus zmienStatus = new zmienStatus();
     try {
-        zmienStatus.zmienStatusKsiazkiIOddaWypozyczenie(idKsiazki, nowyStatus);
-        System.out.println("Status wypożyczenia został zaktualizowany w bazie.");
+        zmienStatus zmienStatus = new zmienStatus();
+        zmienStatus.zmienStatusKsiazkiIOddaWypozyczenie(idCzytelnika, kodKsiazki, dataWypozyczenia, nowyStatus);
+
+        wybraneWypozyczenie.setStatus(nowyStatus);
+        tabelaWyporzyczen.refresh();
+
+        System.out.println("Status wypożyczenia został zaktualizowany!");
     } catch (SQLException e) {
         e.printStackTrace();
-        System.out.println("Błąd podczas aktualizacji statusu w bazie danych.");
+        System.out.println("Błąd podczas aktualizacji statusu wypożyczenia!");
     }
 }
 

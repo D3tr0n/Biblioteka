@@ -14,18 +14,32 @@ import javafx.scene.layout.VBox;
 
 public class MenuCzytelnikaController{
 
+    @FXML
+    private Label emailCzytelnika;
+
+    private String emailCzytelnika2;
+
+    public void setEmail(String email) {
+        this.emailCzytelnika2 = email;
+        emailCzytelnika.setText(emailCzytelnika2);
+        zaladujWyporzyczenia();
+    }
+
 
     private void zaladujWyporzyczenia() {
-        WyporzyczeniaDane wczytaneDaneWyporzyczenia = new WyporzyczeniaDane();
-        wczytaneDaneWyporzyczenia.wczytajDaneZWyporzyczen(listaWyporzyczen, tabelaWyporzyczen,"");
+        if (emailCzytelnika.getText() != null && !emailCzytelnika.getText().isEmpty()) {
+            WyporzyczeniaDane2 wczytaneDaneWyporzyczenia = new WyporzyczeniaDane2();
+            wczytaneDaneWyporzyczenia.wczytajDaneZWyporzyczenDlaEmail(listaWyporzyczen, tabelaWyporzyczen, emailCzytelnika.getText());
+        } else {
+            System.out.println("E-mail użytkownika jest pusty. Nie można załadować danych.");
+        }
     }
+
 
     @FXML
     public void initialize() {
 
         panelWyporzyczen.setVisible(true);
-
-        zaladujWyporzyczenia();
 
         kolumnaCzytelnikImie.setCellValueFactory(new PropertyValueFactory<>("imie"));
         kolumnaCzytelnikNazwisko.setCellValueFactory(new PropertyValueFactory<>("nazwisko"));
@@ -61,19 +75,6 @@ public class MenuCzytelnikaController{
     private TableColumn<Wyporzyczenie, String> kolumnaStatus2;
 
     private final ObservableList<Wyporzyczenie> listaWyporzyczen = FXCollections.observableArrayList();
-
-    @FXML
-    private Label emailCzytelnika;
-
-    private String emailCzytelnika2;
-
-    public void setEmail(String email) {
-        this.emailCzytelnika2 = email;
-        System.out.println("Email w MenuCzytelnikaController: " + emailCzytelnika2);
-
-        emailCzytelnika.setText(emailCzytelnika2);
-    }
-
 
 
 
