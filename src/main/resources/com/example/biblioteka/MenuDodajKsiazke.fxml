@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="271.0" prefWidth="557.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.biblioteka.DodajKsiazkeController">
+   <children>
+      <Text layoutX="211.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dodaj Książkę">
+         <font>
+            <Font size="25.0" />
+         </font></Text>
+      <HBox layoutX="48.0" layoutY="56.0" prefHeight="199.0" prefWidth="480.0">
+         <children>
+            <VBox prefHeight="199.0" prefWidth="263.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tytuł książki: ">
+                     <font>
+                        <Font size="17.0" />
+                     </font></Text>
+                  <TextField fx:id="DodajTytul" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Status:">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Text>
+                  <ChoiceBox fx:id="DodajStatus" prefHeight="25.0" prefWidth="226.0" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Gatunek:">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="DodajGatunek" />
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </VBox>
+            <VBox prefHeight="199.0" prefWidth="292.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Imie Autora:">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="DodajImieAutora" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Nazwisko Autora:">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="DodajNazwiskoAutora" />
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+      <Button alignment="CENTER" contentDisplay="TOP" layoutX="494.0" layoutY="239.0" mnemonicParsing="false" onAction="#onDodajKsiazke" text="Dodaj ">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
