@@ -3,12 +3,15 @@ package com.example.biblioteka;
 import javafx.fxml.FXML;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.VBox;
+
+
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -66,7 +69,7 @@ public class MenuController extends ZczytanieCzytelnikow {
     protected TextField wyszukiwarkaKsiazek;
 
     @FXML
-    protected TableView<Ksiazka> tabelaKsiazek;
+    private TableView<Ksiazka> tabelaKsiazek;
 
     @FXML
     protected TableColumn<Ksiazka, String> kolumnaTytul;
@@ -134,8 +137,16 @@ public class MenuController extends ZczytanieCzytelnikow {
         kolumnaImieAutora.setCellFactory(TextFieldTableCell.forTableColumn());
         kolumnaNazwaAutora.setCellFactory(TextFieldTableCell.forTableColumn());
         kolumnaGatunek.setCellFactory(TextFieldTableCell.forTableColumn());
-        
 
+        kolumnaTytul.setCellValueFactory(new PropertyValueFactory<>("tytul"));
+        kolumnaImieAutora.setCellValueFactory(new PropertyValueFactory<>("imieAutora"));
+        kolumnaNazwaAutora.setCellValueFactory(new PropertyValueFactory<>("nazwiskoAutora"));
+        kolumnaGatunek.setCellValueFactory(new PropertyValueFactory<>("Gatunek"));
+        kolumnaStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+
+
+        ZczytanieKsiazek zczytanieKsiazek = new ZczytanieKsiazek();
+        zczytanieKsiazek.wczytajDaneZKsiazki(listaKsiazek, tabelaKsiazek, "");
 
 
         EdycjaDanych edycja = new EdycjaDanych();
@@ -247,14 +258,64 @@ private void zmienStatusWyporzyczenia() {
     }
 }
 
+@FXML
+private TextField EmailWypozycz;
 
-    @FXML
-    private void onWyporzyczKsiazke() {
+@FXML
+private void onWyporzyczKsiazke() {
+    Ksiazka wybranaKsiazka = tabelaKsiazek.getSelectionModel().getSelectedItem();
 
+    String email = EmailWypozycz.getText().trim();
+
+
+
+
+
+
+    if (wybranaKsiazka == null) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Nie wybrano książki!!!");
+        alert.setHeaderText("Nie wybrano książki!!!");
+        alert.showAndWait();
+
+        return;
     }
 
+    if (email.isEmpty()) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Błąd");
+        alert.setHeaderText("Pole e-mail nie może być puste!!!");
+        alert.showAndWait();
+        return;
+    }
 
+    if (!"Dostępna".equals(wybranaKsiazka.getStatus())) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Błąd");
+        alert.setHeaderText("Wybrana książka jest już wypożyczona.");
+        alert.showAndWait();
 
+        return;
+    }
 
+    try {
+        WyporzyczeniaDodanie wyporzyczeniaDodanie = new WyporzyczeniaDodanie();
+        wyporzyczeniaDodanie.wypozyczKsiazke(email, wybranaKsiazka);
 
+        wybranaKsiazka.setStatus("Wypożyczona");
+        tabelaKsiazek.refresh();
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Operacja pomyślna!");
+        alert.setHeaderText("Książka została wyporzyczona!");
+        alert.showAndWait();
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("ERROR!");
+        alert.setHeaderText("Email nie istnieje");
+        alert.showAndWait();
+    }
+}
 }

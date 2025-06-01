@@ -13,7 +13,19 @@ public class Czytelnik {
         this.email = new SimpleStringProperty(email);
     }
 
-    public String getImie() { return imie.get(); }
-    public String getNazwisko() { return nazwisko.get(); }
-    public String getEmail() { return email.get(); }
+    public String getImie() {
+        return imie.get();
+    }
+
+    public String getNazwisko() {
+        return nazwisko.get();
+    }
+
+    public String getEmail() {
+        return email.get();
+    }
+
+    public int getIdCzytelnika() {
+        return Integer.parseInt(getEmail().substring(0, getEmail().indexOf("@")));
+    }
 }

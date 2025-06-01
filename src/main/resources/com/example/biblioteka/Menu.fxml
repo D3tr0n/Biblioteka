@@ -48,7 +48,8 @@
                     <Button onAction="#wyszukajKsiazki" text="🔍" />
                 <Button mnemonicParsing="false" onAction="#onUsunKsiazke" text="Usuń Książkę" />
                 <Button onAction="#onDodajKsiazke" text="Dodaj Książkę" />
-                <Button onAction="#onWyporzyczKsiazke" text="Wyporzyczenie Książki" />
+                <TextField fx:id="EmailWypozycz" prefWidth="170" promptText="Wpisz email czytelnika..." />
+                <Button onAction="#onWyporzyczKsiazke" text="Wypożycz książkę" />
                 </HBox>
                 
                 <TableView fx:id="tabelaKsiazek" VBox.vgrow="ALWAYS">
