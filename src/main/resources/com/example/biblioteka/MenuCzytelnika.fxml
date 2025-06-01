@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.biblioteka.MenuCzytelnikaController">
+
+    <left>
+        <VBox spacing="10" style="-fx-padding: 10; -fx-background-color: #f0f0f0;">
+
+        </VBox>
+    </left>
+
+    <center>
+        <StackPane>
+            <VBox fx:id="panelWyporzyczen" spacing="10" visible="False">
+                <padding>
+                    <Insets bottom="10" left="10" right="10" top="10" />
+                </padding>
+            <Label fx:id="emailCzytelnika" prefHeight="17.0" prefWidth="168.0" />
+
+                <HBox alignment="CENTER_LEFT" spacing="10">
+
+                </HBox>
+
+                <TableView fx:id="tabelaWyporzyczen" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="kolumnaCzytelnikImie" prefWidth="120" text="Imię Czytelnika" />
+                        <TableColumn fx:id="kolumnaCzytelnikNazwisko" prefWidth="120" text="Nazwisko Czytelnika" />
+                        <TableColumn fx:id="kolumnaTytulKsiazki" prefWidth="200" text="Tytuł Książki" />
+                        <TableColumn fx:id="kolumnaDataWyporzyczenia" prefWidth="120" text="Data Wypożyczenia" />
+                        <TableColumn fx:id="kolumnaDataOddania" prefWidth="120" text="Data Oddania" />
+                        <TableColumn fx:id="kolumnaStatus2" prefWidth="100" text="Status" />
+                    </columns>
+                </TableView>
+            </VBox>
+
+
+
+        </StackPane>
+    </center>
+
+</BorderPane>

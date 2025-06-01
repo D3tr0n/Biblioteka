@@ -3,6 +3,8 @@ package com.example.biblioteka;
 import javafx.fxml.FXML;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -10,7 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.VBox;
-
+import javafx.stage.Stage;
 
 
 import java.io.IOException;
@@ -158,10 +160,12 @@ public class MenuController extends ZczytanieCzytelnikow {
     @FXML
     public void onDodajKsiazke() {
         try {
-            NoweOkno okno = new NoweOkno();
-            okno.otworzOkno("MenuDodajKsiazke.fxml", "Dodaj książkę!!!");
-
-
+            FXMLLoader fxmlLoader3 = new FXMLLoader(Login.class.getResource("MenuDodajKsiazke.fxml"));
+            Scene scene3 = new Scene(fxmlLoader3.load(), 1000, 400);
+            Stage stage3 = new Stage();
+            stage3.setTitle("Menu");
+            stage3.setScene(scene3);
+            stage3.show();
         } catch (IOException e) {
             System.out.println("Nie mozna otworzyc okna");
         }
@@ -214,7 +218,6 @@ public class MenuController extends ZczytanieCzytelnikow {
 
     @FXML
     private void WyszukajWyporzyczenia() {
-
     kolumnaCzytelnikImie.setCellValueFactory(new PropertyValueFactory<>("imie"));
     kolumnaCzytelnikNazwisko.setCellValueFactory(new PropertyValueFactory<>("nazwisko"));
     kolumnaTytulKsiazki.setCellValueFactory(new PropertyValueFactory<>("tytul"));
@@ -222,12 +225,8 @@ public class MenuController extends ZczytanieCzytelnikow {
     kolumnaDataOddania.setCellValueFactory(new PropertyValueFactory<>("dataOddania"));
     kolumnaStatus2.setCellValueFactory(new PropertyValueFactory<>("status"));
 
-
     WyporzyczeniaDane wczytaneDaneWyporzyczenia = new WyporzyczeniaDane();
     wczytaneDaneWyporzyczenia.wczytajDaneZWyporzyczen(listaWyporzyczen, tabelaWyporzyczen, wyszukiwarkaWyporzyczen.getText());
-
-
-    tabelaWyporzyczen.refresh();
 }
 
 @FXML
@@ -264,12 +263,7 @@ private TextField EmailWypozycz;
 @FXML
 private void onWyporzyczKsiazke() {
     Ksiazka wybranaKsiazka = tabelaKsiazek.getSelectionModel().getSelectedItem();
-
     String email = EmailWypozycz.getText().trim();
-
-
-
-
 
 
     if (wybranaKsiazka == null) {
@@ -314,7 +308,7 @@ private void onWyporzyczKsiazke() {
         e.printStackTrace();
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("ERROR!");
-        alert.setHeaderText("Email nie istnieje");
+        alert.setHeaderText("Podano złe email lub książka już raz została wyporzyczona");
         alert.showAndWait();
     }
 }

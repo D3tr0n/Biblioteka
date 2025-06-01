@@ -29,8 +29,12 @@ public class RejestracjaController extends PobieranieRejestracja{
     @FXML
     protected void onRejestruj() {
         if(Email.getText().isEmpty() || Haslo.getText().isEmpty() || Imie.getText().isEmpty() || Nazwisko.getText().isEmpty() || !Email.getText().contains("@")){
-            BladDanych.setText("Błędne dane...");
-        }else {
+            BladDanych.setText("Uzupełnij wszystkie dane prawidłowo!");
+        }
+        else if(Haslo.getText().length() < 8 || Haslo.getText().length() > 30){
+            BladDanych.setText("Hasło musi składać się conajmniej 8 znków i nieprzekraczać 30");
+        }
+        else {
             BladDanych.setText("");
             Rejestracja(Imie.getText(), Nazwisko.getText(), Haslo.getText(), Email.getText());
 

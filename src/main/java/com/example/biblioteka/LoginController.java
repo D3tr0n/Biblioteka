@@ -9,7 +9,7 @@ public class LoginController  extends LoginSprawdzanie{
     protected void onHelloButtonClick() {
         try {
             NoweOkno okno = new NoweOkno();
-            okno.otworzOkno("Rejestracja.fxml", "Rejestracja");
+            okno.otworzOkno("Rejestracja.fxml", "Rejestracja",null);
 
 
         } catch (IOException e) {
@@ -36,8 +36,7 @@ public class LoginController  extends LoginSprawdzanie{
     protected void OnZalogujSie(){
 
         if (LoginEmail.getText().isEmpty() || HasloLogin.getText().isEmpty()) {
-            System.out.println("Pola login i hasło nie mogą być puste!");
-            BladLogowania.setText("blad emaila");
+            BladLogowania.setText("Pola login i hasło nie mogą być puste!");
         }
         else {
             LoginSpr(LoginEmail.getText(), HasloLogin.getText());

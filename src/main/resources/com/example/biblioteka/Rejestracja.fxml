@@ -36,6 +36,6 @@
          </font>
       </Text>
       <PasswordField fx:id="Haslo" layoutX="226.0" layoutY="281.0" />
-      <Label fx:id="BladDanych" alignment="CENTER" contentDisplay="CENTER" layoutX="227.0" layoutY="316.0" prefHeight="17.0" prefWidth="149.0" textAlignment="CENTER" textFill="RED" />
+      <Label fx:id="BladDanych" alignment="CENTER" contentDisplay="CENTER" layoutX="118.0" layoutY="318.0" prefHeight="17.0" prefWidth="366.0" textAlignment="CENTER" textFill="RED" />
    </children>
 </AnchorPane>

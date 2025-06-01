@@ -5,8 +5,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.Node;
 import javafx.stage.Stage;
 
 
@@ -15,9 +16,7 @@ public class LoginSprawdzanie{
     @FXML
     protected Label BladLogowania;
 
-
     public void LoginSpr(String email, String haslo){
-
 
         Connection conn;
         try {
@@ -38,17 +37,28 @@ public class LoginSprawdzanie{
 
 
                 if (resultSet.next()) {
-                    System.out.println("Logowanie udane!");
-
-                    NoweOkno okno = new NoweOkno();
-                    okno.otworzOkno("Rejestracja.fxml", "Menu");
-                    BladLogowania.getScene().getWindow().hide();
+                    if ( resultSet.getString("email").equals("admin@") && resultSet.getString("haslo").equals("admin123")){
+                        System.out.println("Logowanie udane!");
+                        FXMLLoader fxmlLoader2 = new FXMLLoader(Login.class.getResource("Menu.fxml"));
+                        Scene scene2 = new Scene(fxmlLoader2.load(), 1000, 400);
+                        Stage stage = new Stage();
+                        stage.setTitle("Menu");
+                        stage.setScene(scene2);
+                        stage.show();
+                        BladLogowania.getScene().getWindow().hide();
+                    }
+                    else {
+                        System.out.println("Logowanie udane!");
+                        String emailBazy = resultSet.getString("email");
+                        NoweOkno okno = new NoweOkno();
+                        okno.otworzOkno("MenuCzytelnika.fxml", "Menu", emailBazy);
+                        BladLogowania.getScene().getWindow().hide();
+                    }
 
 
 
                 } else {
-                    System.out.println("Błąd logowania! Niepoprawny email lub hasło.");
-                    BladLogowania.setText("Błąd");
+                    BladLogowania.setText("Błędne dane!!!");
 
                 }
 

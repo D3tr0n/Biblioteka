@@ -19,10 +19,10 @@ public class WyporzyczeniaDane {
             );
 
             String zapytanie = "SELECT w.id_czytelnika, w.kod_ksiazki, c.imie, c.nazwisko, k.tytul, " +
-                               "w.data_wypozyczenia, w.data_oddania, k.status " +
-                               "FROM wypozyczenia w " +
-                               "JOIN czytelnik c ON w.id_czytelnika = c.id_czytelnika " +
-                               "JOIN ksiazka k ON w.kod_ksiazki = k.kod_ksiazki";
+                    "w.data_wypozyczenia, w.data_oddania, k.status " +
+                    "FROM wypozyczenia w " +
+                    "JOIN czytelnik c ON w.id_czytelnika = c.id_czytelnika " +
+                    "JOIN ksiazka k ON w.kod_ksiazki = k.kod_ksiazki";
 
             PreparedStatement stmt;
 
